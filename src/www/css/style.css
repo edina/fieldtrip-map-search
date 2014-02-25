@@ -4,4 +4,6 @@
     background-position: 5px 5px;
 }
 
-/* map-search-popup */
+#map-search-results{
+    overflow: auto;
+}
