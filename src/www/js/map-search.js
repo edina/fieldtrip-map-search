@@ -41,10 +41,7 @@ define(['map', 'utils'], function(map, utils){
     var search = function(){
         var inFocus = 0;
 
-        // TODO
-        // $('#search-page').on('pagebeforehide', function (event, ui){
-        //     plugins.SoftKeyBoard.hide();
-        // });
+        utils.hideKeyboard();
 
         $('#map-search-spinner').hide();
         $('#map-search-term').keyup(function(event){
