@@ -6,10 +6,11 @@
     "main": "",
     "keywords": [
         "fieldtrip-open",
-        "map search",
+        "search",
+        "map"
     ],
     "license": "BSD",
     "ignore": [
-        "**/.*",
+        "**/.*"
     ]
 }
