@@ -1,0 +1,15 @@
+{
+    "name": "fieldtrip-map-search",
+    "version": "0.0.1",
+    "homepage": "https://github.com/edina/fieldtrip-map-search",
+    "description": "Map Search is a Fieldtrip Open plugin for doing map searches.",
+    "main": "",
+    "keywords": [
+        "fieldtrip-open",
+        "map search"
+    ],
+    "license": "BSD",
+    "ignore": [
+        "**/.*",
+    ]
+}
