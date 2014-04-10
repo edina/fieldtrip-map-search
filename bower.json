@@ -6,7 +6,7 @@
     "main": "",
     "keywords": [
         "fieldtrip-open",
-        "map search"
+        "map search",
     ],
     "license": "BSD",
     "ignore": [
