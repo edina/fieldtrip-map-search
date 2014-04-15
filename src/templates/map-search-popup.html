@@ -1,13 +1,21 @@
 <div id="map-search-popup"
-     data-role="popup"
-     class="ui-corner-all">
-  <div class="ui-corner-all ui-content">
-    <p>{{data["question"]}}</p>
-    <a data-role="button"
-       data-inline="true"
-       data-rel="back">{{data["cancel"]}}</a>
-    <a id="home-exit-confirm"
+       data-role="popup"
+       data-theme="a"
+       data-dismissible="false"
+       data-history="false">
+    <a id="map-search-popup-close"
+       data-rel="back"
        data-role="button"
-       data-inline="true">{{data["exit"]}}</a>
+       data-theme="a"
+       data-icon="delete"
+       data-iconpos="notext"
+       class="ui-btn-right">
+    </a>
+    <h3>{{data["title"]}}</h3>
+    <input id="map-search-term" type="text" name="searchterm" value="" />
+    <div id="map-search-spinner">
+      <img src="theme/css/images/ajax-loader.gif" alt="Wait Spinner" />
+    </div>
+
+    <ul id="map-search-results" data-role="listview"></ul>
   </div>
-</div>

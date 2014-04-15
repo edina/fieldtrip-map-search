@@ -1,11 +1,20 @@
 {
+    "header": {
+        "buttons" : {
+            "map-search":{
+                "class": "map-search",
+                "data-role": "button",
+                "data-inline": "true",
+                "data-transition": "none",
+                "data-iconpos": "notext"
+            }
+        }
+    },
     "popups": {
         "popup1":{
             "template": "map-search-popup.html",
             "data": {
-                "question": "Are you sure you want to exit Fieldtrip Open?",
-                "cancel": "Cancel",
-                "exit": "Exit"
+                "title": "Search Map"
             }
         }
     }
