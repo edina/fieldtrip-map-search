@@ -4,5 +4,5 @@ define(['./map-search'], function(search) {
         module("Map Search");
     };
 
-    return {run: run}
+    return {run: run};
 });
