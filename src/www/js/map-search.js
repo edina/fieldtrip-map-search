@@ -189,7 +189,7 @@ define(['map', 'utils'], function(map, utils){
     );
 
     $(document).on(
-        'vmousedown',
+        'vclick',
         '.map-search',
         search
     );
