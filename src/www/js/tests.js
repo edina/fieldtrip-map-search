@@ -33,7 +33,7 @@ DAMAGE.
 
 /* global asyncTest, equal, notEqual, ok, start */
 
-define(['map', './map-search', 'tests/systests'], function(map, search, sys) {
+define(['map', './map-search', 'tests/systests'], function(map, search, sts) {
 
 return {
 
@@ -50,8 +50,8 @@ sys: {
         asyncTest("Map Search", function(){
             var orgLonLat = map.getCentre(true);
 
-            sys.goToMap(function(){
-                sys.clickAndTest({
+            sts.goToMap(function(){
+                sts.clickAndTest({
                     'id': '#map-page .map-search',
                     'test':function(){
                         return $('#map-search-popup').parent().hasClass("ui-popup-active");
@@ -63,7 +63,7 @@ sys: {
                         var e = $.Event('keyup');
                         e.keyCode = 8;
                         $(searchId).trigger(e);
-                        sys.intervalTest({
+                        sts.intervalTest({
                             'id': searchId,
                             'test': function(){
                                 if($('#map-search-results li').length > 0){
@@ -73,13 +73,14 @@ sys: {
                             'cb': function(success){
                                 ok(success, "Results found");
                                 $($('#map-search-results li').get(1)).click();
-                                sys.changePageCheck('#map-page', function(){
+                                sts.changePageCheck('#map-page', function(){
                                     var lonLat = map.getCentre(true).centre;
                                     notEqual(orgLonLat.lon, lonLat.lon, 'Compare longitude with old');
                                     notEqual(orgLonLat.lat, lonLat.lat, 'Compare latitude with old');
                                     equal(lonLat.lon.toFixed(2), -3.17, 'Glenrothes centre longitude');
                                     equal(lonLat.lat.toFixed(2), 56.2, 'Glenrothes centre latitude');
-                                    start();
+
+                                    sts.complete();
                                 });
                             }
                         });
