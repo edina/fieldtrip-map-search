@@ -74,7 +74,7 @@ sys: {
                                 ok(success, "Results found");
                                 $($('#map-search-results li').get(1)).click();
                                 sts.changePageCheck('#map-page', function(){
-                                    var lonLat = map.getCentre(true).centre;
+                                    var lonLat = map.getCentre(true);
                                     notEqual(orgLonLat.lon, lonLat.lon, 'Compare longitude with old');
                                     notEqual(orgLonLat.lat, lonLat.lat, 'Compare latitude with old');
                                     equal(lonLat.lon.toFixed(2), -3.17, 'Glenrothes centre longitude');
