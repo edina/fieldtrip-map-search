@@ -76,11 +76,14 @@ define(['map', 'utils'], function(map, utils){
      */
     var search = function(){
         var inFocus = 0;
+        var oldValue = '';
 
         utils.hideKeyboard();
 
         $('#map-search-spinner').hide();
         $('#map-search-term').keyup(function(event){
+            var newValue = $('#map-search-term').val();
+
             if((event.keyCode === 38) || (event.keyCode === 40)){
                 // up or down arrow has been clicked focus on entry
                 $($('#map-search-results li')).blur();
@@ -105,13 +108,12 @@ define(['map', 'utils'], function(map, utils){
                 }
             }
             else{
-                // ignore non character keys (except delete) and anything less than 3 characters
-                if((String.fromCharCode(event.keyCode).match(/\w/) || event.keyCode === 8) &&
-                   $('#map-search-term').val().length > 2){
+                if(oldValue != newValue && newValue.length > 2){
                     inFocus = -1;
                     autocomplete();
                 }
             }
+            oldValue = newValue;
         });
 
         if($('#map-search-results li').length > 0){
