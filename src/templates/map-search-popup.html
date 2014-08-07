@@ -1,20 +1,10 @@
-<div id="map-search-popup"
-       data-role="popup"
-       data-theme="a"
-       data-dismissible="false"
-       data-history="false">
-    <a id="map-search-popup-close"
-       data-rel="back"
-       data-role="button"
-       data-theme="a"
-       data-icon="delete"
-       data-iconpos="notext"
-       class="ui-btn-right">
+<div id="map-search-popup" data-role="popup" data-theme="b" data-dismissible="false" data-history="false">
+    <a id="map-search-popup-close" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">
     </a>
     <h3>{{data["title"]}}</h3>
-    <input id="map-search-term" type="text" name="searchterm" value="" />
+    <input id="map-search-term" type="text" name="searchterm" value="">
     <div id="map-search-spinner">
-      <img src="theme/css/images/ajax-loader.gif" alt="Wait Spinner" />
+      <img src="theme/css/images/ajax-loader.gif" alt="Wait Spinner">
     </div>
 
     <ul id="map-search-results" data-role="listview"></ul>
