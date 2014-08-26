@@ -1,9 +1,9 @@
 {
     "name": "fieldtrip-map-search",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "homepage": "https://github.com/edina/fieldtrip-map-search",
     "description": "Map Search is a Fieldtrip Open plugin for doing map searches.",
-    "main": "",
+    "main": "src/www/js/map-search.js",
     "keywords": [
         "fieldtrip-open",
         "search",
