@@ -68,7 +68,7 @@ define(['map', 'utils'], function(map, utils){
         localStorage.setItem('ignore-centre-on-annotation', true);
 
         // close dialog
-        $('#search-page-close').click();
+        $('#map-search-popup').popup('close');
     };
 
     /**
@@ -180,20 +180,29 @@ define(['map', 'utils'], function(map, utils){
         });
     };
 
-    // TODO - doesn't work on android after second invoke
+    // click on map search button
+    $(document).on(
+        'vclick',
+        '.map-search',
+        search
+    );
+
+    // click on map search result entry
     $(document).on(
         'click',
         '.map-search-result-entry',
         function(event){
             centreOnPlace($(event.currentTarget));
-            $('#map-search-popup').popup('close');
         }
     );
 
+    // click on close dialog button
     $(document).on(
         'vclick',
-        '.map-search',
-        search
+        '#map-search-popup-close',
+        function(){
+            $('#map-search-popup').popup('close');
+        }
     );
 
     $('head').prepend('<link rel="stylesheet" href="plugins/map-search/css/style.css" type="text/css" />');
