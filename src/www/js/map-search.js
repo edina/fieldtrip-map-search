@@ -228,7 +228,7 @@ define(['map', 'utils'], function(map, utils){
 
     // click on map search result entry
     $(document).on(
-        'click',
+        'vclick',
         '.map-search-result-entry',
         function(event){
             centreOnPlace($(event.currentTarget));
