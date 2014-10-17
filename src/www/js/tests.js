@@ -47,18 +47,40 @@ sys: {
     run: function() {
         module("Map Search");
 
+        /*
+            Feature: Map search:
+                In order to find a location in the map
+                as a user
+                I want to search by place name
+            Scenario:
+                Given that the user is in the map page
+                And the user clicks the map-search button
+                Then an input box is displayed
+                When the user write a place name
+                Then a list of places is retrieved and displayed
+                When the user click on a result
+                Then the map is centered in that location
+
+        */
+
+
         asyncTest("Map Search", function(){
             var orgLonLat = map.getCentre(true);
 
             sts.goToMap(function(){
+
+                // Click in the map search button
                 sts.clickAndTest({
                     'id': '#map-page .map-search',
                     'test':function(){
+                        // Assert that the pop up is visible
                         return $('#map-search-popup').parent().hasClass("ui-popup-active");
                     },
                     'cb': function(success){
                         ok(success, "Popup visible");
                         var searchId = '#map-search-term';
+
+                        // User enter a place name
                         $(searchId).val('Glenro');
                         var e = $.Event('keyup');
                         e.keyCode = 8;
@@ -66,13 +88,17 @@ sys: {
                         sts.intervalTest({
                             'id': searchId,
                             'test': function(){
+                                // Assert that the user got some results
                                 if($('#map-search-results li').length > 0){
                                     return true;
                                 }
                             },
                             'cb': function(success){
                                 ok(success, "Results found");
+                                // User select a result
                                 $($('#map-search-results li').get(1)).click();
+
+                                // Assert that the map was centered in the right location
                                 sts.changePageCheck('#map-page', function(){
                                     var lonLat = map.getCentre(true);
                                     notEqual(orgLonLat.lon, lonLat.lon, 'Compare longitude with old');
