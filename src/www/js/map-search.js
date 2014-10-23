@@ -35,12 +35,20 @@ DAMAGE.
  * Map searching module.
  */
 define(['map', 'utils'], function(map, utils){
+    var MAP_SEARCH_COUNTRY = 'map-search-country';
     var timer;
     var searchQuery;
+    var gazetteer = 'os';
     var unlockUrl = '/unlock/ws/search';
+    var geoNamesUrl = '/geonames';
 
     if(utils.isMobileDevice()){
         unlockUrl = 'http://unlock.edina.ac.uk/ws/search';
+        geoNamesUrl = 'http://api.geonames.org';
+    }
+
+    if(map.isOSM()){
+        gazetteer = 'geonames';
     }
 
     /**
@@ -121,6 +129,36 @@ define(['map', 'utils'], function(map, utils){
             $('#map-search-results').html('');
         }
 
+        var countyCode = localStorage.getItem(MAP_SEARCH_COUNTRY);
+        if(countyCode){
+            utils.selectVal('#map-search-country-select', countyCode);
+        }
+        else{
+            if(utils.hasNetworkConnection()){
+                // get country code of user's location
+                var coords = map.getUserCoordsExternal();
+
+                // can't do this in unlock, use geonames
+                var url = geoNamesUrl + '/findNearbyPlaceName?username=ftopen&type=json&lat=' +
+                    coords.lat + '&lng=' + coords.lon;
+                $.getJSON(url, function(data){
+                    countyCode = data.geonames[0].countryCode;
+                    localStorage.setItem(MAP_SEARCH_COUNTRY, countyCode);
+                    utils.selectVal('#map-search-country-select', countyCode);
+                });
+            }
+            else{
+                // just default to UK
+                utils.selectVal('GB');
+            }
+        }
+
+        if(!map.isOSM()){
+            // hide country option for ftgb
+            $('#map-search-country').hide();
+            $('#map-search-controls .ui-block-a').css('width', '100%');
+        }
+
         $('#map-search-popup').popup('open');
         $('#map-search-term').focus();
 
@@ -146,7 +184,8 @@ define(['map', 'utils'], function(map, utils){
             unlockUrl,
             {
                 name: $('#map-search-term').val() + '*',
-                gazetteer: 'os',
+                country: $('#map-search-country-select').val(),
+                gazetteer: gazetteer,
                 maxRows: '10',
                 format: 'json'
             },
