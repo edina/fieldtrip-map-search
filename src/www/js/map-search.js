@@ -159,7 +159,7 @@ define(['map', 'utils'], function(map, utils){
             $('#map-search-controls .ui-block-a').css('width', '100%');
         }
 
-        $('#map-search-popup').popup('open');
+        $('#map-search-popup').popup('open', {x:0,y:0});
         $('#map-search-term').focus();
 
         var headHeight = $('.ui-page-active .ui-header').first().height();
