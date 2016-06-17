@@ -38,18 +38,8 @@ define(['map', 'utils'], function(map, utils){
     var MAP_SEARCH_COUNTRY = 'map-search-country';
     var timer;
     var searchQuery;
-    var gazetteer = 'os';
-    var unlockUrl = '/unlock/ws/search';
-    var geoNamesUrl = '/geonames';
-
-    if(utils.isMobileDevice()){
-        unlockUrl = 'http://unlock.edina.ac.uk/ws/search';
-        geoNamesUrl = 'http://api.geonames.org';
-    }
-
-    if(map.isOSM()){
-        gazetteer = 'geonames';
-    }
+    var geoNamesUrl = 'http://api.geonames.org';
+    var geoNamesUsername = 'ftopen';
 
     /**
      * Click off map search auto complete.
@@ -138,14 +128,19 @@ define(['map', 'utils'], function(map, utils){
                 // get country code of user's location
                 var coords = map.getUserCoordsExternal();
 
-                // can't do this in unlock, use geonames
-                var url = geoNamesUrl + '/findNearbyPlaceName?username=ftopen&type=json&lat=' +
-                    coords.lat + '&lng=' + coords.lon;
-                $.getJSON(url, function(data){
-                    countyCode = data.geonames[0].countryCode;
-                    localStorage.setItem(MAP_SEARCH_COUNTRY, countyCode);
-                    utils.selectVal('#map-search-country-select', countyCode);
-                });
+                $.getJSON(
+                    geoNamesUrl + '/findNearbyPlaceName',
+                    {
+                        username: geoNamesUsername,
+                        type: 'json',
+                        lat: coords.lat,
+                        lng: coords.lon
+                    },
+                    function(data){
+                        countyCode = data.geonames[0].countryCode;
+                        localStorage.setItem(MAP_SEARCH_COUNTRY, countyCode);
+                        utils.selectVal('#map-search-country-select', countyCode);
+                    });
             }
             else{
                 // just default to UK
@@ -181,29 +176,22 @@ define(['map', 'utils'], function(map, utils){
         }
 
         searchQuery = $.getJSON(
-            unlockUrl,
+            geoNamesUrl + '/searchJSON',
             {
-                name: $('#map-search-term').val() + '*',
+                name: $('#map-search-term').val(),
                 country: $('#map-search-country-select').val(),
-                gazetteer: gazetteer,
-                maxRows: '10',
-                format: 'json'
+                username: geoNamesUsername,
+                maxRows: 10,
             },
             function(data){
                 searchQuery = undefined; // prevent aborting
                 $('#map-search-results').html('');
-                var uniqueList = {};
-                $.each(data.features, function(i, feature){
-                    var name = feature.properties.name;
-                    if(feature.properties.adminlevel2){
-                        name += ', ' + $.trim(feature.properties.adminlevel2);
-                    }
 
-                    if(!uniqueList[name]){
-                        uniqueList[name] = true;
-                        var html = '<li class="map-search-result-entry"><a href="#">' + name + '</a><input type="hidden" value="' + feature.properties.centroid + '" /></li>';
-                        $('#map-search-results').append(html);
-                    }
+                $.each(data.geonames, function(i, feature){
+                    var name = feature.name;
+                    var centroid = feature.lng + ', ' + feature.lat;
+                    var html = '<li class="map-search-result-entry"><a href="#">' + name + '</a><input type="hidden" value="' + centroid + '" /></li>';
+                    $('#map-search-results').append(html);
                 });
 
                 if($('#map-search-results li').length > 0){
