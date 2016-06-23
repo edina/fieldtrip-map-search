@@ -36,10 +36,14 @@ DAMAGE.
  */
 define(['map', 'utils'], function(map, utils){
     var MAP_SEARCH_COUNTRY = 'map-search-country';
+    var DEFAULT_GEONAMES_URL = 'http://api.geonames.org';
+    var DEFAULT_GEONAMES_USERNAME = 'ftopen';
+
+    var config = utils.getConfig();
     var timer;
     var searchQuery;
-    var geoNamesUrl = 'http://api.geonames.org';
-    var geoNamesUsername = 'ftopen';
+    var geoNamesUrl = config.geonamesurl || DEFAULT_GEONAMES_URL;
+    var geoNamesUsername = config.geonamesusername || DEFAULT_GEONAMES_USERNAME;
 
     /**
      * Click off map search auto complete.
