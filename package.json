@@ -1,6 +1,6 @@
 {
   "name": "fieldtrip-map-search",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A fieldtrip plugin for adding layers to a map",
   "main": "src/www/js/map-search.js",
   "scripts": {
